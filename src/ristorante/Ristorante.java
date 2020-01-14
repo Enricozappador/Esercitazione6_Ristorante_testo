@@ -124,22 +124,31 @@ public class Ristorante {
 		else 
 		{
 			if(tipologia.compareTo("PR")==0)
-			{ prtemp = new Primo (nome, prezzo, tipologia, ""); 
-			
+				
+			{ ptemp=new Prodotto(nome,prezzo,tipologia); 
+				prtemp = new Primo (nome, prezzo, tipologia, ""); 
+				//prtemp.setDescrizione(prtemp.getDescrizione());
+			 ptemp=prtemp; 
 				primi.add(numprimi++, prtemp); 
 					 prodotti.put(nome, ptemp);
 					 numprodotti++;
+					
 			}
 			else if(tipologia.compareTo("D")==0)
 			{dtemp = new Dolce(nome, prezzo, tipologia, "");
-				dolci.add(numdolci, dtemp);
+				ptemp=dtemp;
+			dolci.add(numdolci, dtemp);
 				prodotti.put(nome, ptemp);
+				 
 			}
 			else if(tipologia.compareTo("B")==0)
 			{
 				btemp= new Bevanda(nome, prezzo, tipologia, -1); 
+				ptemp=btemp; 
 				bevande.add(numbevande, btemp);
 				prodotti.put(nome, ptemp);
+				
+				
 				
 			}
 			
@@ -184,44 +193,50 @@ public class Ristorante {
 		Prodotto ptemp = null; 
 		
 		if (prodotti.containsKey(nome))
-			ptemp = prodotti.get(nome);
-		
+			{ptemp = prodotti.get(nome);
+			
+			}
 		return ptemp;
 	}
 	
 	public String elencoProdotti() {
-		//LinkedList<Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values());
+		LinkedList<Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values());
+		int ntemp=0; 
 		String tostring =""; 
 		
-		/*for(Prodotto p : ptemp)
+		for(Prodotto p : ptemp)
 		{
-			//if(p!=null)
+			if(p!=null)
 			{
 				if(p instanceof Primo)
 				{
 					for (Primo pr : primi)
 						if(pr!=null && p.getNome().compareTo(pr.getNome())==0)
-							tostring = tostring + pr.getNome()+", "+pr.getDescrizione();
+							tostring = tostring + pr.toString()+ "\n";
 				}
 				else if (p instanceof Dolce)
 				{
 					for (Dolce d : dolci)
 						if(d!=null && p.getNome().compareTo(d.getNome())==0)
-							tostring = tostring + d.getNome()+ ", "+d.getDescrizione(); 
+							tostring = tostring + d.toString()+"\n"; 
 				}
 				else if(p instanceof Bevanda)
 				{
 					for (Bevanda b : bevande)
 						if(b!=null && p.getNome().compareTo(b.getNome())==0)
-							tostring = tostring + b.getNome() + ", servire a "+b.getGradi()+" gradi"; 
+							tostring = tostring + b.toString()+"\n"; 
 				}
 			}
-		}*/
-		for (Prodotto p : prodotti.values())
+		}
+		/*for(int i=0; i<numprodotti; i++)
+			if()
+		/*for (Prodotto p : prodotti.values())
 		{
 			tostring += p.toString()+"\n";
 		}
-		
+		/*for (int i =0; i<ntemp ; i++)
+		tostring = tostring + ptemp.get(i)+"\n";
+		*/
 		return tostring;
 	}
 	

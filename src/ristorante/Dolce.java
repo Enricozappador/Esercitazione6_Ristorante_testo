@@ -16,6 +16,10 @@ public Dolce(String nome, int prezzo, String tipologia, String descrizione) {
 	public String getDescrizione() {
 		return descrizione;
 	}
-
+@Override
+public String toString() {
+	return getNome()+ ", "+descrizione;
+	
+}
 	
 }

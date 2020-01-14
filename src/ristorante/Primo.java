@@ -17,4 +17,9 @@ public class Primo extends Prodotto{
 	public String getDescrizione() {
 		return descrizione;
 	}	
+	@Override
+	public String toString() {
+		return getNome()+ ", "+descrizione;
+		
+	}
 }

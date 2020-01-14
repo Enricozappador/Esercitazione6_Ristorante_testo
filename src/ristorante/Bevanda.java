@@ -16,4 +16,9 @@ public class Bevanda extends Prodotto{
 	public int getGradi() {
 		return gradi;
 	}
+	@Override
+	public String toString() {
+		return getNome()+ ", servire a "+getGradi()+" gradi";
+		
+	}
 }

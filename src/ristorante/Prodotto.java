@@ -4,10 +4,11 @@ public class Prodotto {
 	private String nome; 
 	private int prezzo; 
 	private String tipologia; 
+	private String descrizione; 
+	private int gradi; 
 	
-	public void setPrezzo(int prezzo) {
-		this.prezzo = prezzo;
-	}
+	
+	
 
 
 
@@ -28,7 +29,9 @@ public class Prodotto {
 		return prezzo;
 	}
 
-
+	public void setPrezzo(int prezzo) {
+		this.prezzo = prezzo;
+	}
 
 	public String getTipologia() {
 		return tipologia;
@@ -45,5 +48,29 @@ public class Prodotto {
 	{
 		return null;
 		
+	}
+
+
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+
+
+	public int getGradi() {
+		return gradi;
+	}
+
+
+
+	public void setGradi(int gradi) {
+		this.gradi = gradi;
 	}
 }
