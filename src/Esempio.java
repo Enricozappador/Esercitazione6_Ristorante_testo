@@ -20,6 +20,7 @@ public class Esempio {
 		System.out.println("\nNuovo cuoco, Davide Scabin");
 		r.creaCuoco("Davide", "Scabin", "davide.scabin@gmail.com", "36678984568");
 		
+		
 
 		Cuoco c = r.cercaCuoco("davide.scabin@gmail.com");
 		System.out.println("\nInformazioni cuoco trovato");

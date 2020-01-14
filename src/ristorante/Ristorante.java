@@ -1,10 +1,14 @@
 package ristorante;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 
@@ -22,6 +26,8 @@ public class Ristorante {
 	private int numprimi; 
 	private LinkedList<Dolce> dolci; 
 	private int numdolci; 
+	private Map <Integer ,Ordinazione> ordinazioni; 
+	private int numordinazioni; 
 	
 	public Ristorante (){
 		cuochi = new TreeMap<String, Cuoco>();  
@@ -34,20 +40,23 @@ public class Ristorante {
 		numprimi = 0; 
 		dolci = new LinkedList<Dolce>();
 		numdolci = 0; 
+		ordinazioni = new TreeMap<Integer , Ordinazione>();
+		numordinazioni = 0; 
 		
 	}
 	
 	
 	public Cuoco creaCuoco(String nome, String cognome, String email, String numeroTelefono) {
-	Cuoco ctemp = new Cuoco(nome, cognome, email, numeroTelefono); 
+	Cuoco ctemp = null;  
 	
 	
-	if (cuochi.containsKey(email)) {
-		ctemp = null; 
+	if (cuochi.containsKey(email)==true) {
+		return null; 
 	}
 	
-	else 
-		{cuochi.put(email, ctemp);
+	else if(cuochi.containsKey(email)!=true)
+		{ctemp = new Cuoco(nome, cognome, email, numeroTelefono, null);
+		cuochi.put(email, ctemp);
 		numcuochi++; 
 		}
 		
@@ -201,7 +210,7 @@ public class Ristorante {
 	
 	public String elencoProdotti() {
 		LinkedList<Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values());
-		int ntemp=0; 
+		//int ntemp=0; 
 		String tostring =""; 
 		
 		for(Prodotto p : ptemp)
@@ -241,21 +250,194 @@ public class Ristorante {
 	}
 	
 	public Ordinazione nuovaOrdinazione(int numeroTavolo, Collection<String> nomiProdotti) {
-		return null;
+		Ordinazione otemp= cercaOrdinazione(numeroTavolo); 
+		//boolean flag = false; 
+		//int nptemp =0;
+		//int x = numeroTavolo;
+		LinkedList <String> prodottiordinati = new LinkedList <String>(); 
+		//LinkedList<String> potemp = new LinkedList <String>();
+		//LinkedList <Prodotto> ptemp = new LinkedList <Prodotto>(prodotti.values());
+		prodottiordinati.addAll(nomiProdotti);
+		LinkedList<Cuoco>ctemp = new LinkedList<Cuoco>(cuochi.values());
+		
+		if(otemp != null)
+		for(String s : nomiProdotti)
+		{
+		if (s!=null && prodotti.containsKey(s))
+		{
+			prodottiordinati.add(s);
+		}
+		}
+		
+		
+	/*	for(Prodotto p : ptemp) 
+		{
+			if(p!=null)
+			{
+				if(prodottiordinati.toString().compareTo(p.getNome())==0)
+				{
+					potemp.add(nptemp++,p);
+				}
+			}
+		}*/
+		
+		//for (Ordinazione o : ordinazioni)
+		{
+		if(ordinazioni.containsKey(numeroTavolo))
+			{
+			return null; 
+			}
+		
+		else
+		{
+			if(numprodotti>0)
+			{
+				otemp = new Ordinazione (numeroTavolo, prodottiordinati, null);
+				ordinazioni.put(numeroTavolo, otemp );
+				
+			}
+			
+			else 
+				return null;
+		
+		}
+		}
+		
+		if(ctemp!=null)
+		{  LinkedList<Ordinazione> otemp1 = new LinkedList<Ordinazione>(ordinazioni.values());
+			ctemp.getFirst().setOrdinazioni(otemp1);
+			otemp.setCuocoass(ctemp.get(1).getCognome());
+		}
+		
+		
+		
+		
+		
+		return otemp;
 	}
 	
 	public Ordinazione cercaOrdinazione(int numeroTavolo) {
-		return null;
+		Ordinazione otemp = null;
+		/*for (Ordinazione o : ordinazioni)
+		{
+			if(o!=null && o.getNumeroTavolo() == numeroTavolo)
+			return o; 
+		}
+		*/
+		if (ordinazioni.containsKey(numeroTavolo))
+			otemp = ordinazioni.get(numeroTavolo);
+		
+		return otemp;
 	}
 	
 	public Collection<Prodotto> getProdottiOrdinazione(int numeroTavolo) {
-		return null;
+		Ordinazione otemp = cercaOrdinazione(numeroTavolo);
+		LinkedList <Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values()); 
+		LinkedList <Prodotto> temp = new LinkedList <Prodotto>();
+		
+		for(String s :otemp.getProdottiordinati())
+		{
+			if(s!=null)
+			{
+				for(Prodotto p :ptemp)
+				{
+					if(p!=null && (p.getNome().compareTo(s)==0))
+					{
+						temp.add(p);
+					}
+				}
+			}
+			
+				
+		}
+		
+		
+		
+		
+		
+		
+		
+		return temp;
 	}
 		
 	public Collection<Ordinazione> getOrdinazioniCuoco(String email){
-		return null;
+		LinkedList <Cuoco>ctemp = new LinkedList <Cuoco>(cuochi.values());
+	LinkedList<Ordinazione> otemp = new LinkedList <Ordinazione>(ordinazioni.values());
+	
+	/*for(Cuoco c : ctemp) {
+		if(c!=null )
+		{
+			for(Ordinazione o : otemp)
+				if(o!=null && o.getNumeroTavolo())
+		}
+	}
+	*/
+		return otemp;
 	}
 	
-	public void leggiDatiRistorante(String nomeFile){
+	public void leggiDatiRistorante(String nomeFile) throws IOException {
+		
+		BufferedReader in = new BufferedReader(new FileReader(nomeFile));
+		String linea; 
+		
+		String nomecuoco = null; 
+		String cognome = null; 
+		String email = null; 
+		String numeroTelefono = null; 
+		
+		String nomeprodotto = null ;
+		String prezzo = null; 
+		String descrizione = null; 
+		String gradi = null; 
+		
+		while ((linea = in.readLine()) != null )
+		{
+			try {
+				StringTokenizer st = new StringTokenizer (linea , ";");
+				String iniziale = st.nextToken().trim();
+				if(iniziale.toUpperCase().equals("C"))
+				{
+					nomecuoco = st.nextToken().trim();
+					cognome = st.nextToken().trim();
+					email = st.nextToken().trim();
+					numeroTelefono = st.nextToken().trim();
+					
+					this.creaCuoco(nomecuoco, cognome, email, numeroTelefono);
+					
+				}
+				else if (iniziale.toUpperCase().equals("B"))
+				{
+					nomeprodotto = st.nextToken().trim();
+					prezzo = st.nextToken().trim();
+					gradi = st.nextToken().trim();
+					Prodotto p = this.creaProdotto(nomeprodotto, "B", Integer.parseInt(prezzo));
+					((Bevanda) p).setGradi(Integer.parseInt(gradi));
+				}
+				else if (iniziale.toUpperCase().equals("PR"))
+				{
+					nomeprodotto = st.nextToken().trim();
+					prezzo = st.nextToken().trim();
+					descrizione = st.nextToken().trim();
+					Prodotto p = this.creaProdotto(nomeprodotto, "PR", Integer.parseInt(prezzo));
+					((Primo) p).setDescrizione(descrizione);
+				}
+				else if (iniziale.toUpperCase().equals("D"))
+				{
+					nomeprodotto = st.nextToken().trim();
+					prezzo = st.nextToken().trim();
+					descrizione = st.nextToken().trim();
+					Prodotto p = this.creaProdotto(nomeprodotto, "D", Integer.parseInt(prezzo));
+					((Dolce) p).setDescrizione(descrizione);
+				}
+			}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		
+		
 	}
+	in.close(); 
+
+}
 }
