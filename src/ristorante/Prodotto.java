@@ -3,20 +3,20 @@ package ristorante;
 public class Prodotto {
 	private String nome; 
 	private int prezzo; 
-	private String tipologia; 
-	private String descrizione; 
-	private int gradi; 
+//	private String tipologia; 
+	//private String descrizione; 
+//	private int gradi; 
 	
 	
 	
 
 
 
-	public Prodotto(String nome, int prezzo, String tipologia) {
+	public Prodotto(String nome, int prezzo) {
 		super();
 		this.nome = nome;
 		this.prezzo = prezzo;
-		this.setTipologia(tipologia); 
+		//this.setTipologia(tipologia); 
 	}
 	
 	
@@ -33,7 +33,7 @@ public class Prodotto {
 		this.prezzo = prezzo;
 	}
 
-	public String getTipologia() {
+	/*public String getTipologia() {
 		return tipologia;
 	}
 
@@ -41,7 +41,7 @@ public class Prodotto {
 
 	public void setTipologia(String tipologia) {
 		this.tipologia = tipologia;
-	}
+	}*/
 
 	@Override
 	public String toString()
@@ -52,7 +52,7 @@ public class Prodotto {
 
 
 
-	public String getDescrizione() {
+	/*public String getDescrizione() {
 		return descrizione;
 	}
 
@@ -72,5 +72,5 @@ public class Prodotto {
 
 	public void setGradi(int gradi) {
 		this.gradi = gradi;
-	}
+	}*/
 }

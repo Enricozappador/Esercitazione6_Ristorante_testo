@@ -4,9 +4,9 @@ public class Primo extends Prodotto{
 	
 	private String descrizione; 
 
-	public Primo(String nome, int prezzo, String tipologia, String descrizione) {
-		super(nome, prezzo, tipologia);
-		descrizione = ""; 
+	public Primo(String nome, int prezzo) {
+		super(nome, prezzo);
+		this.descrizione = ""; 
 		
 	}
 
@@ -19,7 +19,7 @@ public class Primo extends Prodotto{
 	}	
 	@Override
 	public String toString() {
-		return getNome()+ ", "+descrizione;
+		return this.getNome()+ ", "+this.getDescrizione();
 		
 	}
 }

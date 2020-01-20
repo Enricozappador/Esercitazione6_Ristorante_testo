@@ -4,9 +4,9 @@ public class Dolce extends Prodotto{
 	
 	private String descrizione; 
 	
-public Dolce(String nome, int prezzo, String tipologia, String descrizione) {
-		super(nome, prezzo, tipologia);
-	descrizione = ""; 
+public Dolce(String nome, int prezzo) {
+		super(nome, prezzo);
+	this.descrizione = ""; 
 	}
 
 	public void setDescrizione(String descrizione) {
@@ -18,7 +18,7 @@ public Dolce(String nome, int prezzo, String tipologia, String descrizione) {
 	}
 @Override
 public String toString() {
-	return getNome()+ ", "+descrizione;
+	return this.getNome()+ ", "+this.getDescrizione();
 	
 }
 	

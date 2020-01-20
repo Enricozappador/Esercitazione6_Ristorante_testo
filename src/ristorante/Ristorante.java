@@ -55,7 +55,7 @@ public class Ristorante {
 	}
 	
 	else if(cuochi.containsKey(email)!=true)
-		{ctemp = new Cuoco(nome, cognome, email, numeroTelefono, null);
+		{ctemp = new Cuoco(nome, cognome, email, numeroTelefono);
 		cuochi.put(email, ctemp);
 		numcuochi++; 
 		}
@@ -121,81 +121,30 @@ public class Ristorante {
 	}
 	
 	public Prodotto creaProdotto(String nome, String tipologia, int prezzo) {
-		Prodotto ptemp = new Prodotto(nome, prezzo, tipologia); 
+		Prodotto ptemp = new Prodotto(nome, prezzo); 
 		Primo prtemp = null; 
 		Dolce dtemp = null; 
 		Bevanda btemp = null; 
 		//boolean flag = false;
 		
-		if(prodotti.containsKey(nome))
-			ptemp=null; 
-		
-		else 
-		{
-			if(tipologia.compareTo("PR")==0)
-				
-			{ ptemp=new Prodotto(nome,prezzo,tipologia); 
-				prtemp = new Primo (nome, prezzo, tipologia, ""); 
-				//prtemp.setDescrizione(prtemp.getDescrizione());
-			 ptemp=prtemp; 
-				primi.add(numprimi++, prtemp); 
-					 prodotti.put(nome, ptemp);
-					 numprodotti++;
-					
-			}
-			else if(tipologia.compareTo("D")==0)
-			{dtemp = new Dolce(nome, prezzo, tipologia, "");
-				ptemp=dtemp;
-			dolci.add(numdolci, dtemp);
-				prodotti.put(nome, ptemp);
-				 
-			}
-			else if(tipologia.compareTo("B")==0)
-			{
-				btemp= new Bevanda(nome, prezzo, tipologia, -1); 
-				ptemp=btemp; 
-				bevande.add(numbevande, btemp);
-				prodotti.put(nome, ptemp);
-				
-				
-				
-			}
-			
+		if(prodotti.containsKey(nome)) {
+			this.prodotti.get(nome).setPrezzo(prezzo);
 		}
 		
-		/*for (Prodotto p : prodotti)
-			if(p!=null && p.getNome().compareTo(nome)==0)
-			{
-				p.setPrezzo(prezzo);
-				flag = true; 
-			}*/
 		
-		/*if (flag == false)
-		{
-			if(tipologia.compareTo("PR")==0)
-			{ ptemp = new Primo(nome, prezzo, tipologia, "");
-				primi.add(numprimi++, prtemp); 
-					ptemp = prtemp; 
-				prodotti.add(numprodotti++, ptemp); 
+		else {
+//			this.p.put(nome, )
+			if (tipologia.compareTo("PR")==0) {
+				this.prodotti.put(nome, new Primo(nome, prezzo));
 			}
-			else if(tipologia.compareTo("D")==0)
-			{dtemp = new Dolce(nome, prezzo, tipologia, "");
-				dolci.add(numdolci, dtemp);
-				ptemp = dtemp; 
-				prodotti.add(numprodotti++, ptemp); 
+			else if (tipologia.compareTo("D")==0) {
+				this.prodotti.put(nome, new Dolce(nome, prezzo));
 			}
-			else if(tipologia.compareTo("B")==0)
-			{
-				btemp= new Bevanda(nome, prezzo, tipologia, -1); 
-				bevande.add(numbevande, btemp);
-				ptemp= btemp; 
-				prodotti.add(numprodotti++, ptemp);
-				
-			}
-			
-		}*/
+			else
+				this.prodotti.put(nome, new Bevanda(nome, prezzo));
+		}
 		
-		return ptemp;
+		return this.prodotti.get(nome);
 	}
 	
 	public Prodotto cercaProdotto(String nome) {
@@ -209,7 +158,7 @@ public class Ristorante {
 	}
 	
 	public String elencoProdotti() {
-		LinkedList<Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values());
+		/*LinkedList<Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values());
 		//int ntemp=0; 
 		String tostring =""; 
 		
@@ -246,21 +195,27 @@ public class Ristorante {
 		/*for (int i =0; i<ntemp ; i++)
 		tostring = tostring + ptemp.get(i)+"\n";
 		*/
-		return tostring;
+String s = "";
+		
+		for (Prodotto pi : this.prodotti.values()) {
+			s += pi.toString() + "\n";
+		}
+		
+		return s;
 	}
 	
 	public Ordinazione nuovaOrdinazione(int numeroTavolo, Collection<String> nomiProdotti) {
-		Ordinazione otemp= cercaOrdinazione(numeroTavolo); 
+		//Ordinazione otemp= cercaOrdinazione(numeroTavolo); 
 		//boolean flag = false; 
 		//int nptemp =0;
 		//int x = numeroTavolo;
-		LinkedList <String> prodottiordinati = new LinkedList <String>(); 
+		//LinkedList <String> prodottiordinati = new LinkedList <String>(); 
 		//LinkedList<String> potemp = new LinkedList <String>();
-		//LinkedList <Prodotto> ptemp = new LinkedList <Prodotto>(prodotti.values());
-		prodottiordinati.addAll(nomiProdotti);
-		LinkedList<Cuoco>ctemp = new LinkedList<Cuoco>(cuochi.values());
+		LinkedList <Prodotto> ptemp = new LinkedList <Prodotto>();
+		//prodottiordinati.addAll(nomiProdotti);
+		//LinkedList<Cuoco>ctemp = new LinkedList<Cuoco>(cuochi.values());
 		
-		if(otemp != null)
+		/*if(otemp != null)
 		for(String s : nomiProdotti)
 		{
 		if (s!=null && prodotti.containsKey(s))
@@ -279,7 +234,7 @@ public class Ristorante {
 					potemp.add(nptemp++,p);
 				}
 			}
-		}*/
+		}
 		
 		//for (Ordinazione o : ordinazioni)
 		{
@@ -292,7 +247,7 @@ public class Ristorante {
 		{
 			if(numprodotti>0)
 			{
-				otemp = new Ordinazione (numeroTavolo, prodottiordinati, null);
+				otemp = new Ordinazione (numeroTavolo, prodottiordinati);
 				ordinazioni.put(numeroTavolo, otemp );
 				
 			}
@@ -311,27 +266,62 @@ public class Ristorante {
 		
 		
 		
+		*/
 		
+		if (this.prodotti.isEmpty())
+			return null;
 		
-		return otemp;
+		for (String si : nomiProdotti) {
+			if (this.prodotti.containsKey(si)) {
+				ptemp.add(this.prodotti.get(si));
+			}
+		}
+		
+		if (ptemp.isEmpty()) {
+			return null;
+		}
+		
+		if (this.ordinazioni.containsKey(numeroTavolo)) {
+			this.ordinazioni.get(numeroTavolo).aggiungiProdotti(ptemp);
+		}
+		else{
+			this.ordinazioni.put(numeroTavolo, new Ordinazione(numeroTavolo, ptemp));
+			if (this.cuochi.size() > 0) {
+//				List<Cuoco> l = new LinkedList<Cuoco>(this.c.values());
+//				Collections.sort(l, new ComparatoreCuocoOrdinazioni());
+//				l.get(0).aggiungiOrdinazione(o.get(numeroTavolo));
+				boolean assegnata = false;
+				for (int i = 0; i<2; i++) {
+					for (Cuoco ci : this.elencoCuochi()) {
+						if (ci.getOrdinazioni().size() == i && !assegnata) {
+							ci.aggiungiOrdinazione(this.ordinazioni.get(numeroTavolo));
+							assegnata = true;
+						}
+					}
+				}
+			}
+		}	
+		
+		return this.ordinazioni.get(numeroTavolo);
 	}
 	
 	public Ordinazione cercaOrdinazione(int numeroTavolo) {
-		Ordinazione otemp = null;
+		/*Ordinazione otemp = null;
 		/*for (Ordinazione o : ordinazioni)
 		{
 			if(o!=null && o.getNumeroTavolo() == numeroTavolo)
 			return o; 
 		}
-		*/
+		
 		if (ordinazioni.containsKey(numeroTavolo))
 			otemp = ordinazioni.get(numeroTavolo);
 		
-		return otemp;
+		return otemp;*/
+		return this.ordinazioni.get(numeroTavolo);
 	}
 	
 	public Collection<Prodotto> getProdottiOrdinazione(int numeroTavolo) {
-		Ordinazione otemp = cercaOrdinazione(numeroTavolo);
+		/*Ordinazione otemp = cercaOrdinazione(numeroTavolo);
 		LinkedList <Prodotto> ptemp = new LinkedList<Prodotto>(prodotti.values()); 
 		LinkedList <Prodotto> temp = new LinkedList <Prodotto>();
 		
@@ -357,11 +347,16 @@ public class Ristorante {
 		
 		
 		
-		return temp;
+		return temp;*/
+		if(ordinazioni.containsKey(numeroTavolo)) {
+			return ordinazioni.get(numeroTavolo).getProdottiordinati();
+		}
+		
+		return null;
 	}
 		
-	public Collection<Ordinazione> getOrdinazioniCuoco(String email){
-		LinkedList <Cuoco>ctemp = new LinkedList <Cuoco>(cuochi.values());
+	public Collection<Ordinazione> getOrdinazioniCuoco(String email) throws CuocoNonEsistenteException{
+		/*LinkedList <Cuoco>ctemp = new LinkedList <Cuoco>(cuochi.values());
 	LinkedList<Ordinazione> otemp = new LinkedList <Ordinazione>(ordinazioni.values());
 	
 	/*for(Cuoco c : ctemp) {
@@ -372,7 +367,10 @@ public class Ristorante {
 		}
 	}
 	*/
-		return otemp;
+		if(!this.cuochi.containsKey(email))
+			throw new CuocoNonEsistenteException();
+		
+		return this.cuochi.get(email).getOrdinazioni();
 	}
 	
 	public void leggiDatiRistorante(String nomeFile) throws IOException {

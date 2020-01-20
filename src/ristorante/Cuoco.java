@@ -1,5 +1,6 @@
 package ristorante;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 public class Cuoco {
@@ -12,13 +13,13 @@ public class Cuoco {
 	
 	
 
-	public Cuoco(String nome, String cognome, String email, String telefono, LinkedList<Ordinazione> ordinazioni) {
+	public Cuoco(String nome, String cognome, String email, String telefono) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
 		this.telefono = telefono;
-		this.ordinazioni = ordinazioni; 
+		this.ordinazioni = new LinkedList <Ordinazione>(); 
 	}
 
 	public String getNome() {
@@ -48,9 +49,9 @@ public class Cuoco {
 		return ordinazioni;
 	}
 
-	public LinkedList<Ordinazione> getOrdinazioni() {
+	/*public LinkedList<Ordinazione> getOrdinazioni() {
 		return ordinazioni;
-	}
+	}*/
 
 	public void setOrdinazioni(LinkedList<Ordinazione> ordinazioni) {
 		this.ordinazioni = ordinazioni;
@@ -60,5 +61,13 @@ public class Cuoco {
 		this.ordinazioni = ordinazioni;
 	}
 	*/
+	public void aggiungiOrdinazione(Ordinazione o) {
+		if (this.ordinazioni.size() < 2)
+			this.ordinazioni.add(o);
+	}
+	
+	public Collection<Ordinazione> getOrdinazioni(){
+		return this.ordinazioni;
+	}
 }
 
